@@ -3,63 +3,17 @@
 
 
 const login = require('./functions/login');
-const registerUser = require('./functions/registerUser');
+
 var cors = require('cors');
 var mongoose = require('mongoose');
+ var routes = require('routes'),
 
-var Promises = require('promise');
+var Promise = require('promise');
 var path = require('path');
 
 module.exports = router => {
 
-    router.post('/registerUser', cors(), (req, res) => { 
-
-        const firstname = req.body.firstname;
-        console.log(firstname);
-        const lastname = req.body.lastname;
-        console.log(lastname);
-        const phonenumber = parseInt(req.body.phonenumber);
-        console.log(phonenumber);
-        const email = req.body.email;
-        console.log(email);
-        const password = req.body.password;
-        console.log(password);
-        const retypepassword = req.body.retypepassword;
-        console.log(retypepassword);
-        const usertype = req.body.usertype;
-        console.log(usertype);
-      
-
-        if (!firstname || !lastname || !phonenumber||  !email || !password || !retypepassword || !usertype) {
-
-            res
-                .status(400)
-                .json({
-                    message: 'Invalid Request !'
-                });
-
-        } else {
-
-            registerUser
-                .registerUser(firstname, lastname, phonenumber,email,password, retypepassword,usertype)
-                .then(result => {
-
-                    res.send({
-                        "message": "user has been registered successfully",
-                        "status": true,
-
-
-                    });
-
-
-                })
-                .catch(err => res.status(err.status).json({
-                    message: err.message
-                }).json({
-                    status: err.status
-                }));
-        }
-    });
+    
 router.post('/login', cors(), (req, res) => {
     console.log("entering login function in functions ");
     const emailid = req.body.email;
@@ -77,6 +31,7 @@ router.post('/login', cors(), (req, res) => {
             res.send({
                 "message": "Login Successful",
                 "status": true,
+                "usertype":result.users.usertype
             });
 
         })
@@ -88,3 +43,89 @@ router.post('/login', cors(), (req, res) => {
 
 });
 }
+router.post('/login', cors(), (req, res) => {
+    console.log("entering login function in functions ");
+    const emailid = req.body.email;
+    console.log(emailid);
+    const passwordid = req.body.password;
+    console.log(passwordid);
+   
+   
+    login
+        .loginUser(emailid, passwordid)
+        .then(result => {   
+            console.log("result ===>>>",result.users.usertype)
+
+
+            res.send({
+                "message": "Login Successful",
+                "status": true,
+                "usertype":result.users.usertype
+            });
+
+        })
+        .catch(err => res.status(err.status).json({
+            message: err.message
+        }).json({
+            status: err.status
+        }));
+
+});
+// router.post('/login', cors(), (req, res) => {
+//     console.log("entering login function in functions ");
+//     const emailid = req.body.email;
+//     console.log(emailid);
+//     const passwordid = req.body.password;
+//     console.log(passwordid);
+   
+   
+//     login
+//         .loginUser(emailid, passwordid)
+//         .then(result => {   
+//             console.log("result ===>>>",result.users.usertype)
+
+
+//             res.send({
+//                 "message": "Login Successful",
+//                 "status": true,
+//                 "usertype":result.users.usertype
+//             });
+
+//         })
+//         .catch(err => res.status(err.status).json({
+//             message: err.message
+//         }).json({
+//             status: err.status
+//         }));
+
+// });
+// router.post('/central', cors(), (req, res) => {
+//     console.log("Update sucessfully ");
+//     const rice = req.body.rice;
+//     console.log(rice);
+//     const wheat = req.body.wheat;
+//     console.log(wheat);
+//    const kerosene = req.body.kerosene;
+//     console.log(kerosene);
+
+//     login
+//         .loginUser(emailid, passwordid)
+//         .then(result => {   
+//             console.log("result ===>>>",result.users.usertype)
+
+
+//             res.send({
+//                 "message": "Login Successful",
+//                 "status": true,
+//                 "usertype":result.users.usertype
+//             });
+
+//         })
+//         .catch(err => res.status(err.status).json({
+//             message: err.message
+//         }).json({
+//             status: err.status
+//         }));
+
+// });
+

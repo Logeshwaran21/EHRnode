@@ -3,15 +3,15 @@
 const user = require('../models/register');
 // const user = require('../models/fetchdata');
 
-exports.loginUser = (email, password,usertype) =>
+exports.loginUser = (emailid, passwordid) =>
 
     new Promise((resolve, reject) => {
 
         console.log("Entering into login fun");
-        console.log(email);
+        console.log(emailid);
 
         user.find({
-                "email": email ,
+                "email": emailid ,
             
             })
             .then(users => {
@@ -21,7 +21,7 @@ exports.loginUser = (email, password,usertype) =>
                 console.log(users[0]._id)
                 console.log(dbpin + "   " + users[0].password)
 
-                if (String(password) === String(dbpin)) {
+                if (String( users[0].password) === String(dbpin)) {
 
                     resolve({
                         status: 200,
