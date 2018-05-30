@@ -1,131 +1,135 @@
 'use strict';
 
 
+var request = require('request');
 
-const login = require('./functions/login');
+var Promises = require('promise');
 
-var cors = require('cors');
 var mongoose = require('mongoose');
- var routes = require('routes'),
 
-var Promise = require('promise');
+ var login = require("./functions/login")
+// var landdetails = require("./functions/landdetails")
+var register= require('./functions/register')
+
 var path = require('path');
+var cors = require('cors');
+var cloudinary = require('cloudinary');
+var multipart = require('connect-multiparty');
+var multipartMiddleware = multipart();
+const nodemailer = require('nodemailer');
+var express = require('express');
+var router = express.Router();
+
+
 
 module.exports = router => {
 
-    
-router.post('/login', cors(), (req, res) => {
-    console.log("entering login function in functions ");
-    const emailid = req.body.email;
-    console.log(emailid);
-    const passwordid = req.body.password;
-    console.log(passwordid);
-   
-   
-    login
-        .loginUser(emailid, passwordid)
-        .then(result => {   
-            console.log("result ===>>>",result.users.usertype)
 
+    router.post('/register',cors(),(req,res)=> {
 
-            res.send({
-                "message": "Login Successful",
-                "status": true,
-                "usertype":result.users.usertype
-            });
+        const firstname = req.body.firstname;
+        console.log(firstname);
+        const lastname = req.body.lastname;
+        console.log(lastname);
+        const dateofbirth = req.body.dateofbirth;
+        console.log(dateofbirth);
+        const phonenumber = req.body.phonenumber;
+        console.log(phonenumber);
+        const email = req.body.email;
+        console.log(email);
+        const password = req.body.password;
+        console.log(password);
+        const retypepassword = req.body.retypepassword;
+        console.log(retypepassword);
+        const usertype = req.body.usertype;
+        console.log(usertype);
 
-        })
-        .catch(err => res.status(err.status).json({
-            message: err.message
-        }).json({
-            status: err.status
-        }));
+        if (!firstname || !lastname || !phonenumber|| !dateofbirth || !email || !password || !retypepassword || !usertype || !userId) {
 
-});
+            res
+                .status(400)
+                .json({
+                    message: 'Invalid Request !'
+                });
+
+        } else {
+
+    register
+     .register(firstname,lastname,dateofbirth,phonenumber,email,password,retypepassword,usertype)
+     .then(result => {   
+        console.log("result ===>>>",result)
+        console.log("hello")
+        res.send({
+            "message": "Register sucessfully",
+            "status": true,
+            "usertype":result.users.usertype
+        });
+
+    })
+    .catch(err => res.status(err.status).json({
+        message: err.message
+    }).json({
+        status: err.status
+    }));
+}}
+)
+// router.post('/login',cors(),(req,res)=> {
+//     var email=req.body.email;
+//     console.log("email:",email);
+//     var password=req.body.password;
+//     console.log("password",password);
+
+//     login
+//      .login(email,password)
+//      .then(result => {   
+//         console.log("result ===>>>",result)
+//         console.log("hello")
+//         res.send({
+//             "message": "Login sucessfully",
+//             "status": true,
+//             "usertype":result.users.usertype
+//         });
+
+//     })
+//     .catch(err => res.status(err.status).json({
+//         message: err.message
+//     }).json({
+//         status: err.status
+//     }));
+// }
+// )}
 }
-router.post('/login', cors(), (req, res) => {
-    console.log("entering login function in functions ");
-    const emailid = req.body.email;
-    console.log(emailid);
-    const passwordid = req.body.password;
-    console.log(passwordid);
-   
-   
-    login
-        .loginUser(emailid, passwordid)
-        .then(result => {   
-            console.log("result ===>>>",result.users.usertype)
 
+//  router.post('/landdetails', cors(), (req, res) => {
+//      console.log("Land  Details");
+//      var sellername=req.body.sellername;
+//      console.log("person Name:",sellername);
+//         var addresses=req.body.addresses;
+//      console.log("addresses",addresses);
+//      var landsqft=req.body.landsqft;
+//      console.log("landsqft:",landsqft);
+//      var landvalue=req.body.landvalue;
+//      console.log("landvalue:",landvalue)
 
-            res.send({
-                "message": "Login Successful",
-                "status": true,
-                "usertype":result.users.usertype
-            });
+//    landdetails
+//          .landdetails(sellername,addresses,landsqft,landvalue)
+//          console.log("arjun")
+//          .then(result => {   
+//              console.log("result ===>>>",result)
 
-        })
-        .catch(err => res.status(err.status).json({
-            message: err.message
-        }).json({
-            status: err.status
-        }));
+//              res.send({
+//                  "message": "Seller details Adding Successful",
+//                  "status": true,
+//                  "usertype":result.users.usertype
+//              });
 
-});
-// router.post('/login', cors(), (req, res) => {
-//     console.log("entering login function in functions ");
-//     const emailid = req.body.email;
-//     console.log(emailid);
-//     const passwordid = req.body.password;
-//     console.log(passwordid);
-   
-   
-//     login
-//         .loginUser(emailid, passwordid)
-//         .then(result => {   
-//             console.log("result ===>>>",result.users.usertype)
-
-
-//             res.send({
-//                 "message": "Login Successful",
-//                 "status": true,
-//                 "usertype":result.users.usertype
-//             });
-
-//         })
+//        })
 //         .catch(err => res.status(err.status).json({
 //             message: err.message
 //         }).json({
 //             status: err.status
 //         }));
+//     });
 
-// });
-// router.post('/central', cors(), (req, res) => {
-//     console.log("Update sucessfully ");
-//     const rice = req.body.rice;
-//     console.log(rice);
-//     const wheat = req.body.wheat;
-//     console.log(wheat);
-//    const kerosene = req.body.kerosene;
-//     console.log(kerosene);
-
-//     login
-//         .loginUser(emailid, passwordid)
-//         .then(result => {   
-//             console.log("result ===>>>",result.users.usertype)
-
-
-//             res.send({
-//                 "message": "Login Successful",
-//                 "status": true,
-//                 "usertype":result.users.usertype
-//             });
-
-//         })
-//         .catch(err => res.status(err.status).json({
-//             message: err.message
-//         }).json({
-//             status: err.status
-//         }));
-
-// });
+// }
 
