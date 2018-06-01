@@ -1,26 +1,25 @@
 'use strict';
-const user = require('../models/login');
- exports.login = (UserName,email,password) => 
- 
- new Promise((resolve, reject) => {
-     
-    console.log("Entering into login ");
 
+const user = require('../models/register');
+// const user = require('../models/fetchdata');
+
+exports.login = (username,email, password) =>
+
+    new Promise((resolve, reject) => {
+
+        console.log("Entering into login fun");
         console.log(email);
 
-     user.find({
-         "email": email ,
-         
-        
-          })
-          console.log("vijay")
+        user.find({
+                "email": email ,
+            
+            })
             .then(users => {
 
                 const dbpin = users[0].password;
                 console.log(users[0].password)
                 console.log(users[0]._id)
                 console.log(dbpin + "   " + users[0].password)
-
 
                 if (String(password) === String(dbpin)) {
 
@@ -30,10 +29,13 @@ const user = require('../models/login');
                     });
 
                 } else {
-                   reject({
+
+                    reject({
                         status: 401,
                         message: 'Invalid Credentials !'
                     });
                 }
             })
-   });
+
+
+    });

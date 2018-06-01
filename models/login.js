@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 
 const loginpageSchema = mongoose.Schema({
 
-  UserName:String,  
+  username:String,  
  email:String,
  password:Number
 });

@@ -9,7 +9,7 @@ var mongoose = require('mongoose');
 
  var login = require("./functions/login")
 // var landdetails = require("./functions/landdetails")
-var register= require('./functions/register')
+var registerUser= require('./functions/registerUser')
 
 var path = require('path');
 var cors = require('cors');
@@ -24,74 +24,74 @@ var router = express.Router();
 
 module.exports = router => {
 
+  router.post('/registerUser', cors(), (req, res) => { 
 
-//    router.post('/register',cors(),(req,res)=> {
+    const username = req.body.username;
+    console.log(username);
+    const phonenumber = parseInt(req.body.phonenumber);
+    console.log(phonenumber);
+    const dateofbirth = req.body.dateofbirth;
+    console.log(dateofbirth);
+    const email = req.body.email;
+    console.log(email);
+    const password = req.body.password;
+    console.log(password);
+    const retypepassword = req.body.retypepassword;
+    console.log(retypepassword);
+    const usertype = req.body.usertype;
+    console.log(usertype);
+ 
 
 
-        //const firstname = req.body.firstname;
-        //console.log(firstname);
-        //const lastname = req.body.lastname;
-        //console.log(lastname);
-        //const dateofbirth = req.body.dateofbirth;
-        //console.log(dateofbirth);
-        //const phonenumber = req.body.phonenumber;
-        //console.log(phonenumber);
-        //const email = req.body.email;
-        //console.log(email);
-        //const password = req.body.password;
-        //console.log(password);
-        //const retypepassword = req.body.retypepassword;
-        //console.log(retypepassword);
-        //const usertype = req.body.usertype;
-        //console.log(usertype);
+    if (!username || !phonenumber|| !dateofbirth || !email || !password || !retypepassword || !usertype ) {
 
-      //  if (!firstname || !lastname || !phonenumber|| !dateofbirth || !email || !password || !retypepassword || !usertype || !userId) {
+        res
+            .status(400)
+            .json({
+                message: 'Invalid Request !'
+            });
 
-            //res
-              //  .status(400)
-          //      .json({
-            //        message: 'Invalid Request !'
-        //        });
+    } else {
 
-      //  } else {
+        registerUser
+            .registerUser(username,phonenumber,dateofbirth,email,password, retypepassword,usertype)
+            .then(result => {
 
-    //register
-    // .register(firstname,lastname,dateofbirth,phonenumber,email,password,retypepassword,usertype)
-     //.then(result => {   
-        //console.log("result ===>>>",result)
-        //console.log("hello")
-        //res.send({
-        //    "message": "Register sucessfully",
-        //    "status": true,
-          //  "usertype":result.users.usertype
-      //  });
+                res.send({
+                    "message": "user has been registered successfully",
+                    "status": true,
 
-    //})
-    //.catch(err => res.status(err.status).json({
-      //  m/essage: err.message
-    //})//.json({
-    //    status: err.status
-  //  }));
-//}}
-//)
+
+                });
+
+
+            })
+            .catch(err => res.status(err.status).json({
+                message: err.message
+            }).json({
+                status: err.status
+            }));
+    }
+});
+
 
  router.post('/login',cors(),(req,res)=> {
-    var UserName=req.body.UserName;
-    console.log("UserName:",UserName);
+    var username=req.body.username;
+    console.log("username:",username);
      var email =req.body.email;
      console.log("email:",email);
      var password=req.body.password;
      console.log("password",password);
 
      login
-      .login(UserName,email,password)
+      .login(username,email,password)
       .then(result => {   
          console.log("result ===>>>",result)
          console.log("hello")
          res.send({
              "message": "Login sucessfully",
              "status": true,
-             "usertype":result.users.usertype
+             
          });
 
      })

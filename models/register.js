@@ -5,25 +5,30 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const registerpageSchema = mongoose.Schema({
-    
- firstname:String,
-lastname:String,
-dateofbirth:Number,
-phonenumber:Number,
-email:String,
-password:Number,
-retypepassword:Number,
-usertype:String
+
+    username: String,
+   
+    phonenumber : Number,
+    dateofbirth : String,
+    email : {
+        type: String,
+        unique: true
+    },
+    password: String,
+    retypepassword: String,
+    usertype:  String,
+
+     
 });
 
 
 mongoose.Promise = global.Promise;
 //mongoose.connect('mongodb://localhost:27017/digitalId', { useMongoClient: true });
 
-mongoose.connect('mongodb://Arjunan:Arjunan24@ds231360.mlab.com:31360/login', {
+mongoose.connect('mongodb://loginpage01:loginpage1@ds215709.mlab.com:15709/landregistry', {
     useMongoClient: true
 });
 
 
-// mongodb://Arjunan:Arjunan24@ds231360.mlab.com:31360/login
-module.exports = mongoose.model('user', registerpageSchema);
+
+module.exports = mongoose.model('register', registerpageSchema);
