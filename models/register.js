@@ -3,20 +3,22 @@
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
-
+console.log("vignesh")
 const registerpageSchema = mongoose.Schema({
 
-    username: String,
-   
-    phonenumber : Number,
-    dateofbirth : String,
-    email : {
-        type: String,
-        unique: true
-    },
-    password: String,
-    retypepassword: String,
-    usertype:  String,
+    doctorname:String,
+        lastname:String,
+        dob:String,
+        experience:Number,
+        designation:String,
+        phonenumber:Number,
+        homenumber:Number,
+        hospitalname:String,
+        qualification:String,
+        address:String,
+        licenseid:String,
+        password:String,
+        confirmpassword:String
 
      
 });
@@ -25,7 +27,7 @@ const registerpageSchema = mongoose.Schema({
 mongoose.Promise = global.Promise;
 //mongoose.connect('mongodb://localhost:27017/digitalId', { useMongoClient: true });
 
-mongoose.connect('mongodb://loginpage01:loginpage1@ds215709.mlab.com:15709/landregistry', {
+mongoose.connect('mongodb://ehr:chennai123@ds163530.mlab.com:63530/ehr', {
     useMongoClient: true
 });
 

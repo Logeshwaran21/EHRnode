@@ -1,16 +1,22 @@
 'use strict';
 const user = require('../models/register');
- exports.registerUser = (username,phonenumber,dateofbirth,email,password,retypepassword,usertype) => new Promise((resolve, reject) => {
-
+ exports.registerUser = (doctorname,lastname,dob,experience,designation, phonenumber,homenumber,hospitalname,qualification,address,licenseid,password,confirmpassword) => new Promise((resolve, reject) => {
+console.log("arjun")
     const newUser = new user({
 
-        username : username, 
-        phonenumber : phonenumber,
-        dateofbirth : dateofbirth,
-        email : email,
-        password : password, 
-        retypepassword : retypepassword,
-        usertype : usertype,
+        doctorname:doctorname,
+        lastname:lastname,
+        dob:dob,
+        experience:experience,
+        designation:designation,
+        phonenumber:phonenumber,
+        homenumber:homenumber,
+        hospitalname:hospitalname,
+        qualification:qualification,
+        address:address,
+        licenseid:licenseid,
+        password:password,
+        confirmpassword:confirmpassword
        
     });
     newUser

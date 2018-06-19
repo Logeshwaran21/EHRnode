@@ -24,26 +24,39 @@ var router = express.Router();
 
 module.exports = router => {
 
-  router.post('/registerUser', cors(), (req, res) => { 
+  router.post('/registerFront', cors(), (req, res) => { 
+      console.log("enter your register")
 
-    const username = req.body.username;
-    console.log(username);
+    const doctorname = req.body.doctorname;
+    console.log(doctorname);
+    const lastname = req.body.lastname;
+    console.log(lastname);
+    const dob = req.body.dob;
+    console.log(dob);
+    const experience = req.body.experience;
+    console.log(experience);
+    const designation = req.body.designation;
+    console.log(designation);
     const phonenumber = parseInt(req.body.phonenumber);
     console.log(phonenumber);
-    const dateofbirth = req.body.dateofbirth;
-    console.log(dateofbirth);
-    const email = req.body.email;
-    console.log(email);
+    const homenumber = parseInt(req.body.homenumber);
+    console.log(homenumber);
+    const hospitalname = req.body.hospitalname;
+    console.log(hospitalname);
+    const qualification = req.body.qualification;
+    console.log(qualification);
+    const address = req.body.address;
+    console.log(address);
+    const licenseid = req.body.licenseid;
+    console.log(licenseid);
     const password = req.body.password;
     console.log(password);
-    const retypepassword = req.body.retypepassword;
-    console.log(retypepassword);
-    const usertype = req.body.usertype;
-    console.log(usertype);
+    const confirmpassword = req.body.confirmpassword;
+    console.log(confirmpassword);
+    
  
 
-
-    if (!username || !phonenumber|| !dateofbirth || !email || !password || !retypepassword || !usertype ) {
+    if (!doctorname || !lastname|| !dob || !experience || !designation || !phonenumber || !homenumber || !hospitalname|| !qualification|| !address|| !licenseid|| !password|| !confirmpassword ) {
 
         res
             .status(400)
@@ -52,9 +65,9 @@ module.exports = router => {
             });
 
     } else {
-
+console.log("logesh")
         registerUser
-            .registerUser(username,phonenumber,dateofbirth,email,password, retypepassword,usertype)
+            .registerUser(doctorname,lastname,dob,experience,designation, phonenumber,homenumber,hospitalname,qualification,address,licenseid,password,confirmpassword)
             .then(result => {
 
                 res.send({
@@ -76,15 +89,16 @@ module.exports = router => {
 
 
  router.post('/login',cors(),(req,res)=> {
-    var username=req.body.username;
-    console.log("username:",username);
+   
      var email =req.body.email;
      console.log("email:",email);
      var password=req.body.password;
      console.log("password",password);
+     var category=req.body.category;
+     console.log("category",category);
 
      login
-      .login(username,email,password)
+      .login(email,password,category)
       .then(result => {   
          console.log("result ===>>>",result)
          console.log("hello")
@@ -103,37 +117,4 @@ module.exports = router => {
  }
  )}
 
-
-//  router.post('/landdetails', cors(), (req, res) => {
-//      console.log("Land  Details");
-//      var sellername=req.body.sellername;
-//      console.log("person Name:",sellername);
-//         var addresses=req.body.addresses;
-//      console.log("addresses",addresses);
-//      var landsqft=req.body.landsqft;
-//      console.log("landsqft:",landsqft);
-//      var landvalue=req.body.landvalue;
-//      console.log("landvalue:",landvalue)
-
-//    landdetails
-//          .landdetails(sellername,addresses,landsqft,landvalue)
-//          console.log("arjun")
-//          .then(result => {   
-//              console.log("result ===>>>",result)
-
-//              res.send({
-//                  "message": "Seller details Adding Successful",
-//                  "status": true,
-//                  "usertype":result.users.usertype
-//              });
-
-//        })
-//         .catch(err => res.status(err.status).json({
-//             message: err.message
-//         }).json({
-//             status: err.status
-//         }));
-//     });
-
-// }
 
