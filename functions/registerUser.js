@@ -1,8 +1,9 @@
 'use strict';
 const user = require('../models/register');
- exports.registerUser = (doctorname,lastname,dob,experience,designation, phonenumber,homenumber,hospitalname,qualification,address,licenseid,password,confirmpassword) => new Promise((resolve, reject) => {
+ exports.registerUser = (doctorname,lastname,dob,experience,designation, phonenumber,email,hospitalname,qualification,address,licenseid,password,confirmpassword) =>
+  new Promise((resolve, reject) => {
 console.log("arjun")
-    const newUser = new user({
+const newUser = new user({
 
         doctorname:doctorname,
         lastname:lastname,
@@ -10,7 +11,7 @@ console.log("arjun")
         experience:experience,
         designation:designation,
         phonenumber:phonenumber,
-        homenumber:homenumber,
+        email:email,
         hospitalname:hospitalname,
         qualification:qualification,
         address:address,
@@ -43,7 +44,5 @@ console.log("arjun")
             }
         });
 });
-
- 
  
  

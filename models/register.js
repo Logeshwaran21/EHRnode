@@ -6,19 +6,19 @@ const Schema = mongoose.Schema;
 console.log("vignesh")
 const registerpageSchema = mongoose.Schema({
 
-    doctorname:String,
+        doctorname:String,
         lastname:String,
         dob:String,
-        experience:Number,
+        experience:String,
         designation:String,
         phonenumber:Number,
-        homenumber:Number,
+        email:String,
         hospitalname:String,
         qualification:String,
         address:String,
         licenseid:String,
-        password:String,
-        confirmpassword:String
+        password:Number,
+        confirmpassword:Number
 
      
 });
@@ -27,10 +27,10 @@ const registerpageSchema = mongoose.Schema({
 mongoose.Promise = global.Promise;
 //mongoose.connect('mongodb://localhost:27017/digitalId', { useMongoClient: true });
 
-mongoose.connect('mongodb://ehr:chennai123@ds163530.mlab.com:63530/ehr', {
+mongoose.connect('mongodb://EHRTeam:EHRTeam1@ds139920.mlab.com:39920/ehr', {
     useMongoClient: true
 });
 
 
 
-module.exports = mongoose.model('register', registerpageSchema);
+module.exports = mongoose.model('newUser', registerpageSchema);

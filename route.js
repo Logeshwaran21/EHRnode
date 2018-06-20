@@ -1,6 +1,6 @@
 'use strict';
 
-
+var response = require('response');
 var request = require('request');
 
 var Promises = require('promise');
@@ -39,8 +39,8 @@ module.exports = router => {
     console.log(designation);
     const phonenumber = parseInt(req.body.phonenumber);
     console.log(phonenumber);
-    const homenumber = parseInt(req.body.homenumber);
-    console.log(homenumber);
+    const email = req.body.email;
+    console.log(email);
     const hospitalname = req.body.hospitalname;
     console.log(hospitalname);
     const qualification = req.body.qualification;
@@ -56,7 +56,7 @@ module.exports = router => {
     
  
 
-    if (!doctorname || !lastname|| !dob || !experience || !designation || !phonenumber || !homenumber || !hospitalname|| !qualification|| !address|| !licenseid|| !password|| !confirmpassword ) {
+    if (!doctorname || !lastname|| !dob || !experience || !designation || !phonenumber || !email || !hospitalname|| !qualification|| !address|| !licenseid|| !password|| !confirmpassword ) {
 
         res
             .status(400)
@@ -67,25 +67,26 @@ module.exports = router => {
     } else {
 console.log("logesh")
         registerUser
-            .registerUser(doctorname,lastname,dob,experience,designation, phonenumber,homenumber,hospitalname,qualification,address,licenseid,password,confirmpassword)
+            .registerUser(doctorname,lastname,dob,experience,designation, phonenumber,email,hospitalname,qualification,address,licenseid,password,confirmpassword)
             .then(result => {
 
-                res.send({
-                    "message": "user has been registered successfully",
-                    "status": true,
+
+                    res.send({
+                        "message": "user has been registered successfully",
+                        "status": true,
 
 
-                });
+                    });
 
 
-            })
-            .catch(err => res.status(err.status).json({
-                message: err.message
-            }).json({
-                status: err.status
-            }));
-    }
-});
+                })
+                .catch(err => res.status(err.status).json({
+                    message: err.message
+                }).json({
+                    status: err.status
+                }));
+        }
+    });
 
 
  router.post('/login',cors(),(req,res)=> {
