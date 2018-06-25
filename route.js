@@ -10,7 +10,7 @@ var mongoose = require('mongoose');
  var login = require("./functions/login")
 // var landdetails = require("./functions/landdetails")
 var registerUser= require('./functions/registerUser')
-
+var patientreg= require('./functions/patientreg')
 var path = require('path');
 var cors = require('cors');
 var cloudinary = require('cloudinary');
@@ -104,7 +104,7 @@ console.log("logesh")
          console.log("result ===>>>",result)
          console.log("hello")
          res.send({
-             "message": "Login sucessfully",
+             "message": "Login sucessfull",
              "status": true,
              
          });
@@ -116,6 +116,70 @@ console.log("logesh")
          status: err.status
      }));
  }
- )}
+ )
+//patient register
+router.post('/registersecond', cors(), (req, res) => { 
+    console.log("enter your register")
+
+  const patientname = req.body.patientname;
+  console.log(patientname);
+  const plastname = req.body.plastname;
+  console.log(plastname);
+  const pdob = req.body.pdob;
+  console.log(pdob);
+  const pemail = req.body.pemail;
+  console.log(pemail);
+ 
+  const pphonenumber = parseInt(req.body.pphonenumber);
+  console.log(pphonenumber);
+  const adhar = req.body.adhar;
+  console.log(adhar);
+  const occupation = req.body.occupation;
+  console.log(occupation);
+  const bgroup = req.body.bgroup;
+  console.log(bgroup);
+  const paddress = req.body.paddress;
+  console.log(paddress);
+  const ppassword = req.body.ppassword;
+  console.log(ppassword);
+  const cppassword = req.body.cppassword;
+  console.log(cppassword);
+  
+
+
+  if (!patientname || !plastname|| !pdob || !pemail ||  !pphonenumber ||!occupation ||!bgroup ||  !adhar|| !paddress|| !ppassword|| !cppassword ) {
+
+      res
+          .status(400)
+          .json({
+              message: 'Invalid Request !'
+          });
+
+  } else {
+console.log("manoj")
+      patientreg
+          .patientreg(patientname,plastname,pdob,pphonenumber,pemail,occupation,bgroup,adhar,paddress,ppassword,cppassword)
+          .then(result => {
+              console.log("nbeeli",result);
+
+                  res.send({
+                      "message": "user has been registered successfully",
+                      "status": true,
+
+
+                  });
+
+
+              })
+              .catch(err => res.status(err.status).json({
+                  message: err.message
+              }).json({
+                  status: err.status
+              }));
+      }
+  });
+
+
+}
 
 

@@ -3,7 +3,7 @@
 const user = require('../models/register');
 // const user = require('../models/fetchdata');
 
-exports.login = (username,email, password) =>
+exports.login = (email, password,category) =>
 
     new Promise((resolve, reject) => {
 
